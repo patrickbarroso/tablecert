@@ -145,12 +145,6 @@ Each architectural module can be independently enabled or disabled:
 - Cross-validation is performed exclusively within the training split, following
   a multi-trial K-fold protocol.
 
----
-
-## License
-
-This project is intended for research and academic use.
-
 ## Reproducibility & Experimental Protocol
 
 This work follows a strictly controlled experimental protocol to ensure reproducibility,
@@ -249,4 +243,10 @@ This evaluation protocol enables:
 All training scripts, configuration files, and architectural variants used in this work
 are provided in this repository. Given the same pretrained checkpoints, datasets, and
 random seed, the reported results can be fully reproduced.
+
+---
+
+## License
+
+This project is intended for research and academic use.
 
