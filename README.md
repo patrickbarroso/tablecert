@@ -150,3 +150,103 @@ Each architectural module can be independently enabled or disabled:
 ## License
 
 This project is intended for research and academic use.
+
+## Reproducibility & Experimental Protocol
+
+This work follows a strictly controlled experimental protocol to ensure reproducibility,
+fair comparison, and statistical robustness across all evaluated configurations.
+
+### Training and Evaluation Strategy
+
+All experiments are conducted using a **multi-stage training pipeline**, followed by
+a **cross-validation protocol applied exclusively to the training split**. No information
+from the held-out test data is used during model selection or hyperparameter tuning.
+
+For both YOLO-based table detection and TATR-based structure recognition, the evaluation
+procedure follows a **multi-trial K-fold cross-validation scheme**:
+
+- **Number of trials:** 20  
+- **K-fold setting:** 5 folds per trial  
+- **Total folds:** 100 evaluations per configuration  
+- **Data shuffling:** Enabled for each trial  
+- **Random seed:** Fixed to ensure deterministic data splits  
+
+This protocol allows the estimation of both **mean performance** and **variance**,
+providing statistically reliable conclusions across architectural adaptations.
+
+---
+
+### Model Initialization and Fine-Tuning
+
+All models are initialized from publicly available **pretrained checkpoints**:
+- YOLO-based models are initialized from a YOLOv11 base checkpoint.
+- TATR models are initialized from the official Table Transformer checkpoints.
+
+Parameter-efficient fine-tuning is performed using **Low-Rank Adaptation (LoRA)**,
+which is applied consistently across all experiments when enabled. The LoRA
+configuration is fixed for all runs:
+
+- Rank (`r`): 16  
+- Scaling factor (`α`): 32  
+- Dropout: 0.05  
+
+This design ensures that performance differences arise from architectural adaptations
+rather than fine-tuning capacity.
+
+---
+
+### Architectural Adaptation Protocol
+
+Architectural enhancements are introduced through a **modular plug-and-play builder**.
+Each experimental configuration corresponds to a specific combination of lightweight
+modules, including:
+
+- Frequency-domain filtering (FreqFilter2D)
+- Coordinate-aware convolution (CoordConv)
+- Boundary Refinement Module (BRM)
+- Convolutional Block Attention Module (CBAM)
+- Edge-aware detection heads
+- Enhanced convolutional blocks
+- Lightweight Transformer (Lite Transformer)
+
+Modules are enabled or disabled via configuration flags, allowing systematic ablation
+studies under identical training conditions.
+
+---
+
+### Training Configuration Control
+
+To guarantee fair comparisons, the following settings are held constant across all
+experiments within the same task:
+
+- Number of epochs  
+- Batch size  
+- Input image resolution  
+- Early stopping patience  
+- Optimizer and learning rate schedule  
+- Dataset partitions and fold assignments  
+
+Early stopping is employed using a fixed patience value, preventing overfitting while
+preserving comparability across trials.
+
+---
+
+### Reporting and Statistical Analysis
+
+Final results are reported as the **mean and standard deviation** across all folds and
+trials. For each configuration, performance metrics include detection and structural
+recognition scores, depending on the task.
+
+This evaluation protocol enables:
+- Robust performance estimation
+- Sensitivity analysis across random initializations
+- Fair architectural comparison under controlled conditions
+
+---
+
+### Reproducibility Statement
+
+All training scripts, configuration files, and architectural variants used in this work
+are provided in this repository. Given the same pretrained checkpoints, datasets, and
+random seed, the reported results can be fully reproduced.
+
