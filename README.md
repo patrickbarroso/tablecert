@@ -1,0 +1,152 @@
+# TableCert: Plug-and-Play Architectural Adaptation Framework for Table Analysis
+
+## Overview
+
+**TableCert** is a plug-and-play architectural adaptation framework designed for robust
+table detection and structural recognition in document images. The framework integrates
+YOLO-based object detection models with Table Transformer (TATR)-based structure
+recognition through a modular builder strategy.
+
+TableCert combines **parameter-efficient fine-tuning via LoRA** with a set of
+**lightweight architectural enhancement modules**, including frequency-domain filtering
+and structural refinement components. This design enables systematic architectural
+adaptation while preserving computational efficiency and training stability.
+
+The framework supports multi-stage training and cross-validation protocols, targeting
+both large-scale public datasets (e.g., PubTables) and domain-specific datasets
+(e.g., calibration certificates).
+
+---
+
+## 1. YOLO Configuration (Table Detection)
+
+### Training Pipeline
+
+The YOLO-based table detection pipeline is organized into three sequential stages:
+
+#### 1.1 First Training Phase — PubTables Pretraining
+- **Script:** `/main/yolo_train_enhanced.py`
+- **Description:** Initial training phase using subsets of the PubTables dataset to
+  establish robust table localization capabilities.
+
+#### 1.2 Second Training Phase — Certificate Fine-Tuning
+- **Script:** `/main/yolo_train_enhanced.py`
+- **Description:** Domain adaptation stage focusing on certificate datasets to refine
+  detection performance under domain-specific visual characteristics.
+
+#### 1.3 Third Training Phase — Cross-Validation
+- **Script:** `/main/yolo_enhanced_cross_validation.py`
+- **Description:** Cross-validation stage using a multi-trial K-fold strategy to assess
+  robustness and generalization performance.
+
+---
+
+### YOLO Configuration Parameters
+
+| Variable | Description |
+|--------|-------------|
+| `BASE_CKPT` | Base YOLOv11 checkpoint |
+| `PROJECT_ROOT` | Root directory of the project |
+| `VERSION_ENHANCED` | Builder version specifying the architectural adaptations |
+| `QTD_DATASET` | Number of PubTables samples used for training (e.g., 100k, 200k) |
+| `DATA_YAML` | Path to YOLO dataset configuration (images and labels) |
+| `SAVE_FULL` | Path to save the full trained model |
+| `SAVE_WEIGHTS` | Path to save model weights only |
+| `EPOCHS` | Number of training epochs |
+| `BATCH` | Batch size |
+| `IMGSZ` | Input image resolution |
+| `PATIENCE` | Early stopping patience |
+| `APPLY_LORA` | Enable/disable LoRA fine-tuning |
+
+---
+
+### LoRA Configuration (YOLO)
+
+| Parameter | Value |
+|---------|-------|
+| `LORA_R` | 16 |
+| `LORA_ALPHA` | 32 |
+| `LORA_DROPOUT` | 0.05 |
+
+---
+
+### Builder Module Configuration (YOLO)
+
+Each architectural module can be independently enabled or disabled:
+
+- `APPLY_FREQ_FILTER` — Frequency-domain filtering module  
+- `APPLY_COORD_CONV` — Coordinate-aware convolution (CoordConv)  
+- `APPLY_BRM` — Boundary Refinement Module (BRM)  
+- `APPLY_EDGE_HEAD` — Edge-aware detection head  
+- `APPLY_ENHANCED_BLOCKS` — Enhanced backbone blocks  
+- `APPLY_CBAM` — Convolutional Block Attention Module  
+- `APPLY_LT` — Lightweight Transformer (Lite Transformer)
+
+---
+
+## 2. TATR Configuration (Table Structure Recognition)
+
+### Dataset Preparation
+
+#### 2.1 Dataset Conversion
+- **Script:** `coco_to_datasets.py`
+- **Description:** Converts COCO-style annotations into the format required for TATR
+  training and evaluation.
+
+---
+
+### Training Pipeline
+
+#### 2.2 First Training Phase — Certificate Training
+- **Script:** `/main/tatr_train_enhanced.py`
+- **Entry Point:** `run_train.py`
+- **Description:** Initial fine-tuning of the TATR model on certificate datasets using
+  architectural adaptations and optional LoRA.
+
+#### 2.3 Second Training Phase — Cross-Validation
+- **Script:** `/main/tatr_cross_validation_mp.py`
+- **Entry Point:** `run_cross_validation.py`
+- **Description:** Multi-process K-fold cross-validation for performance stability and
+  robustness analysis.
+
+---
+
+### TATR Configuration Parameters
+
+| Variable | Description |
+|--------|-------------|
+| `MODEL_NAME` | Base TATR checkpoint |
+| `PROJECT_ROOT` | Root directory of the project |
+| `DATASET_JSON_FILE` | Path to the certificate dataset JSON file |
+| `VERSION_ENHANCED` | Builder version specifying the architectural adaptations |
+| `EPOCHS` | Number of training epochs |
+| `BATCH` | Batch size |
+| `IMGSZ` | Input image resolution |
+| `PATIENCE` | Early stopping patience |
+| `APPLY_LORA` | Enable/disable LoRA fine-tuning |
+
+---
+
+### LoRA Configuration (TATR)
+
+| Parameter | Value |
+|---------|-------|
+| `LORA_R` | 16 |
+| `LORA_ALPHA` | 32 |
+| `LORA_DROPOUT` | 0.05 |
+
+---
+
+## Notes
+
+- The same architectural builder philosophy is shared across YOLO and TATR pipelines.
+- All modules are designed to be **plug-and-play**, allowing systematic ablation and
+  benchmarking studies.
+- Cross-validation is performed exclusively within the training split, following
+  a multi-trial K-fold protocol.
+
+---
+
+## License
+
+This project is intended for research and academic use.
