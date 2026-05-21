@@ -18,6 +18,17 @@ both large-scale public datasets (e.g., PubTables) and domain-specific datasets
 
 ---
 
+## 0. Dataset
+
+The pipeline began with the preparation of a large calibration certificate dataset containing approximately 100,000 table instances, complemented with certificates from government laboratories* and publicly available datasets, including [PubTables-1M](https://github.com/microsoft/table-transformer), [TableBank](https://github.com/doc-analysis/TableBank), [PubMed Dataset](https://github.com/ibm-aur-nlp/PubTabNet), and [PMC Open Access](https://pmc.ncbi.nlm.nih.gov/tools/openftlist/). 
+
+*The calibration certificate dataset cannot be publicly disclosed due to confidentiality and privacy agreements.
+
+As in the benchmarking phase, the annotations for this expanded dataset were generated through a semi-automatic supervised process using the [LabelImg](https://github.com/HumanSignal/labelImg) and [Img2Table](https://github.com/xavctn/img2table) libraries.
+
+To ensure robust learning, the dataset was balanced according to the identified structural challenges, enabling the models to be exposed to representative examples of each type of limitation commonly observed in metrological documents.
+
+
 ## 1. YOLO Configuration (Table Detection)
 
 ### Training Pipeline
