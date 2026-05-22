@@ -1,4 +1,4 @@
-# TableCert: Plug-and-Play Architectural Adaptation Framework for Table Analysis
+# TableCert: Architectural Adaptation Framework enhancing YOLO and TATR models for Table Detection and Recognition in Legacy Documents
 
 ## Overview
 
