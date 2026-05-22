@@ -3,8 +3,8 @@
 ## Overview
 
 **TableCert** is a plug-and-play architectural adaptation framework designed for robust
-table detection and structural recognition in document images. The framework integrates
-YOLO-based object detection models with Table Transformer (TATR)-based structure
+table detection and structural recognition in legacy documents. The framework integrates
+YOLO-based object detection model with Table Transformer (TATR)-based structure
 recognition through a modular builder strategy.
 
 TableCert combines **parameter-efficient fine-tuning via LoRA** with a set of
@@ -13,8 +13,8 @@ and structural refinement components. This design enables systematic architectur
 adaptation while preserving computational efficiency and training stability.
 
 The framework supports multi-stage training and cross-validation protocols, targeting
-both large-scale public datasets (e.g., PubTables) and domain-specific datasets
-(e.g., calibration certificates).
+both large-scale public datasets (e.g., PubTables, Tablebank, PMC, etc) and domain-specific datasets
+(e.g., calibration certificates from government laboratories).
 
 ---
 
