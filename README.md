@@ -22,7 +22,7 @@ both large-scale public datasets (e.g., PubTables) and domain-specific datasets
 
 The pipeline began with the preparation of a large calibration certificate dataset containing approximately 100,000 table instances, complemented with certificates from government laboratories* and publicly available datasets, including [PubTables-1M](https://github.com/microsoft/table-transformer), [TableBank](https://github.com/doc-analysis/TableBank), [PubMed Dataset](https://github.com/ibm-aur-nlp/PubTabNet), and [PMC Open Access](https://pmc.ncbi.nlm.nih.gov/tools/openftlist/). 
 
-*The calibration certificate images cannot be publicly disclosed due to confidentiality and privacy agreements. However, COCO-style annotation dataset is available at
+*The calibration certificate's images cannot be publicly disclosed due to confidentiality and privacy agreements. However, COCO-style annotation dataset is available at
 /DATASET folder.
 
 As in the benchmarking phase, the annotations for this expanded dataset were generated through a semi-automatic supervised process using the [LabelImg](https://github.com/HumanSignal/labelImg) and [Img2Table](https://github.com/xavctn/img2table) libraries.
