@@ -22,7 +22,7 @@ both large-scale public datasets (e.g., PubTables) and domain-specific datasets
 
 The pipeline began with the preparation of a large calibration certificate dataset containing approximately 100,000 table instances, complemented with certificates from government laboratories* and publicly available datasets, including [PubTables-1M](https://github.com/microsoft/table-transformer), [TableBank](https://github.com/doc-analysis/TableBank), [PubMed Dataset](https://github.com/ibm-aur-nlp/PubTabNet), and [PMC Open Access](https://pmc.ncbi.nlm.nih.gov/tools/openftlist/). 
 
-*The calibration certificate dataset cannot be publicly disclosed due to confidentiality and privacy agreements.
+*The calibration certificate dataset cannot be publicly disclosed due to confidentiality and privacy agreements. 
 
 As in the benchmarking phase, the annotations for this expanded dataset were generated through a semi-automatic supervised process using the [LabelImg](https://github.com/HumanSignal/labelImg) and [Img2Table](https://github.com/xavctn/img2table) libraries.
 
@@ -35,14 +35,14 @@ To ensure robust learning, the dataset was balanced according to the identified 
 
 The YOLO-based table detection pipeline is organized into three sequential stages:
 
-#### 1.1 First Training Phase — PubTables Pretraining
+#### 1.1 First Training Phase — Dataset Pretraining
 - **Script:** `/main/yolo_train_enhanced.py`
 - **Description:** Initial training phase using subsets of the PubTables dataset to
   establish robust table localization capabilities.
 
-#### 1.2 Second Training Phase — Certificate Fine-Tuning
+#### 1.2 Second Training Phase — Certificates Fine-Tuning
 - **Script:** `/main/yolo_train_enhanced.py`
-- **Description:** Domain adaptation stage focusing on certificate datasets to refine
+- **Description:** Domain adaptation stage focusing on datasets to refine
   detection performance under domain-specific visual characteristics.
 
 #### 1.3 Third Training Phase — Cross-Validation
@@ -59,7 +59,7 @@ The YOLO-based table detection pipeline is organized into three sequential stage
 | `BASE_CKPT` | Base YOLOv11 checkpoint |
 | `PROJECT_ROOT` | Root directory of the project |
 | `VERSION_ENHANCED` | Builder version specifying the architectural adaptations |
-| `QTD_DATASET` | Number of PubTables samples used for training (e.g., 100k, 200k) |
+| `QTD_DATASET` | Number of samples used for training (e.g., 100k, 200k) |
 | `DATA_YAML` | Path to YOLO dataset configuration (images and labels) |
 | `SAVE_FULL` | Path to save the full trained model |
 | `SAVE_WEIGHTS` | Path to save model weights only |
